@@ -1,6 +1,6 @@
 FROM debian:12
 
-LABEL org.opencontainers.image.authors="austin.crandall@howardmiller.com"
+LABEL org.opencontainers.image.authors="austin@crandall.codes"
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       openjdk-17-jdk \
