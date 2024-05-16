@@ -3,6 +3,7 @@ version: '3'
 services:
   namenode:
     image: sevenrats/hadoop-namenode:latest
+    container_name: namenode
     volumes:
       - ./config/hadoop/namenode/:/hadoop/dfs/name
     environment:
@@ -20,6 +21,7 @@ services:
   
   resourcemanager:
     image: sevenrats/hadoop-resourcemanager:latest
+    container_name: resourcemanager
 #    environment:
 #      SERVICE_PRECONDITION: "namenode: datanode:50075"
     env_file:
