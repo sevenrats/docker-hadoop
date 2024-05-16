@@ -2,7 +2,7 @@ version: '3'
 
 services:
   namenode:
-    image: sevenrats/hadoop-namenode
+    image: sevenrats/hadoop-namenode:latest
     volumes:
       - ./config/hadoop/namenode/:/hadoop/dfs/name
     environment:
@@ -20,3 +20,23 @@ services:
       labels:
         traefik.docker.network: hbase
         traefik.port: 50070
+  
+  resourcemanager:
+    image: sevenrats/hadoop-resourcemanager:latest
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
+    env_file:
+      - ./hadoop.env
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == ec2-100-25-15-15.compute-1.amazonaws.com
+      labels:
+        traefik.docker.network: hbase
+        traefik.port: 8088
+    healthcheck:
+      disable: true
