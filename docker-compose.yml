@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  namenode:
+    image: sevenrats/hadoop-namenode
+    volumes:
+      - ./config/hadoop/namenode/:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=hm-test
+    env_file:
+      - ./hadoop.env
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == ec2-100-25-15-15.compute-1.amazonaws.com
+      labels:
+        traefik.docker.network: hbase
+        traefik.port: 50070
