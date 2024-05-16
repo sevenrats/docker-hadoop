@@ -17,14 +17,11 @@ services:
       placement:
         constraints:
           - node.hostname == ec2-100-25-15-15.compute-1.amazonaws.com
-      labels:
-        traefik.docker.network: hbase
-        traefik.port: 50070
   
   resourcemanager:
     image: sevenrats/hadoop-resourcemanager:latest
-    environment:
-      SERVICE_PRECONDITION: "namenode:50070 datanode:50075"
+#    environment:
+#      SERVICE_PRECONDITION: "namenode: datanode:50075"
     env_file:
       - ./hadoop.env
     deploy:
@@ -35,8 +32,5 @@ services:
       placement:
         constraints:
           - node.hostname == ec2-100-25-15-15.compute-1.amazonaws.com
-      labels:
-        traefik.docker.network: hbase
-        traefik.port: 8088
     healthcheck:
       disable: true
